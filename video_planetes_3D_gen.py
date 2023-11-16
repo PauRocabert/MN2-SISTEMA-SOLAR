@@ -3,8 +3,9 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import datetime 
 
+plt.style.use('dark_background')
 
-file = open(r'trayectorias (4).txt','r')
+file = open(r'trayectorias.txt','r')
 Lines = file.readlines()
 
 
@@ -22,11 +23,11 @@ for cos in range(N_cossos):
 
 fig = plt.figure()
 ax = fig.add_subplot(projection="3d")
-colors_planetes =['yellow', 'blue','red', 'orange', 'green', 'violet', 'cyan']
-colors = ['white', 'darkblue','darkred', 'darkorange', 'darkgreen','darkmagenta', 'navy']
+colors_planetes =['yellow', 'darkorange','lime', 'darkturquoise', 'crimson', 'violet', 'cyan']
+colors = ['white', 'orange','limegreen', 'mediumturquoise', 'red','darkmagenta', 'navy']
 
-PLANETES = [ax.plot([],[], 'o', color = colors_planetes[i])[0] for i in range(N_cossos)]
-traces = [ax.plot([],[], '-', lw = 0.7, alpha = 0.9, color = colors[i])[0] for i in range(N_cossos) ]
+PLANETES = [ax.plot([],[], 'o', markersize= 5, color = colors_planetes[i])[0] for i in range(N_cossos-2)]
+traces = [ax.plot([],[], '-', lw = 0.7, alpha = 0.9, color = colors[i])[0] for i in range(N_cossos-2) ]
 patches = PLANETES + traces
 
 
@@ -41,12 +42,12 @@ def animate(i):
 
 
 
-ax.set(xlim3d=(-10, 10), xlabel='X')
-ax.set(ylim3d=(-10, 10), ylabel='Y')
-ax.set(zlim3d=(-0.5, 0.5), zlabel='Z')
+ax.set(xlim3d=(-1.5, 1.5), xlabel='X')
+ax.set(ylim3d=(-1.5, 1.5), ylabel='Y')
+ax.set(zlim3d=(-0.3, 0.3), zlabel='Z')
 
-
+fig.patch.set_facecolor('black') 
 ani = animation.FuncAnimation(fig, animate, frames = N_dies,interval = 1, blit = True)
 dpi = 200
 writer = animation.writers['ffmpeg'](fps=30)
-ani.save('video_planetes_trayectorias_david.mp4',writer=writer,dpi=dpi)
+ani.save('video_planetes_trayectorias_estandard.mp4',writer=writer,dpi=dpi)
