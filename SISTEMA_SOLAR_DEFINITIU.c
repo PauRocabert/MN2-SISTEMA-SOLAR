@@ -89,7 +89,7 @@ int main(){
 
     fprintf(output,"t");
     for (int k=0; k<cossos; k++){ //headers
-    fprintf(output, " x_%s y_%s z_%s E_%s difE_%s", names[k],names[k],names[k],names[k],names[k]);
+    fprintf(output, " x_%s y_%s z_%s E_%s", names[k],names[k],names[k],names[k]);
     }
     fprintf(output,"\n");
 
@@ -144,7 +144,7 @@ int main(){
     double Kv[cossos][4][dim]; //Kv[cos][subíndex K][dimensió]
     double Pk[3][cossos][dim];
 
-    for (int n=0; n<N; n++){ //iterar per pas
+    for (int n=1; n<N; n++){ //iterar per pas
         t+=dt; //guarda el temps
 
        MDIST3(P);
@@ -198,7 +198,7 @@ int main(){
             fprintf(output, "%lf", t);
             for (int k=0; k<cossos; k++){           
                 double E= Energia(V,dist,m,k);
-                fprintf(output, " %lf %lf %lf %lf %lf", P[k][0], P[k][1], P[k][2], E, E-0);
+                fprintf(output, " %lf %lf %lf %lf", P[k][0], P[k][1], P[k][2], E);
             }
             fprintf(output, "\n");
         }
