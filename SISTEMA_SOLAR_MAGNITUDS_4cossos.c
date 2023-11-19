@@ -4,7 +4,7 @@
 
 //DEFINICIÓ DEL SISTEMA 
 
-#define cossos 7 //Nombre de cossos
+#define cossos 4 //Nombre de cossos
 #define dim 3 //Dimensions
 
 //CONSTANTS
@@ -17,44 +17,35 @@ double dt = 2*PI/(365.2425*24*60); //min
 #define N 782*24*60//Nombre d'iteracions (nombre de min en 782 dies)
 
 /*
-double dt = 3600./T0 //hora
+double dt = 3600./T0; //hora
 #define N 18768//Nombre d'iteracions (nombre de h en 782 dies)
 
 double dt = 3600.*24./T0; //dia
 #define N 782 //Nombre d'iteracions (nombre de dies en 782 dies)
 */
 
-char *names[] = {"Sol","Mercuri","Venus","Terra","Mart", "Jupiter","Saturn"};
+char *names[] = {"Sol","Terra","Mart", "Jupiter"};
 
 //DADES INICIALS sense normalitzar
 double M[cossos]= { //masas
     1.99*pow(10.,30.),
-    3.302*pow(10.,23.),
-    4.868*pow(10.,24.),
     5.97*pow(10.,24.),
     6.42*pow(10.,23.),
     1.90*pow(10.,27.),
-    5.683*pow(10.,26)
     }; 
 
 double Po[cossos][dim] = { // posiciones iniciales
     {-1.218 * pow(10., 6), 6.361*pow(10.,5), 2.326*pow(10.,4)},
-    {7.909*pow(10.,6),-6.716*pow(10.,7),-6.354*pow(10.,6)},
-    {1.874*pow(10.,7),-1.063*pow(10.,8),-2.592*pow(10.,6)},
     {1.471 * pow(10., 8),-2.514*pow(10.,7), 2.398*pow(10.,4)},
     {-2.471 * pow(10., 8), -1.422*pow(10.,7), 5.744*pow(10.,6)},
     {6.427*pow(10.,8),  -3.853*pow(10.,8), -1.278*pow(10.,7)},
-    {9.780*pow(10.,8),-1.119*pow(10.,9),-1.948*pow(10.,7)}
     };
 
 double Vo[cossos][dim] = { // velocidades iniciales
     {-8.131*pow(10.,-3), -1.386*pow(10.,-2), 3.036*pow(10.,-4)},
-    {3.849*pow(10.,1),8.984,-2.796},
-    {3.418*10,6.287,-1.886},
     {4.598, 2.922*10, 1.65*pow(10.,-5)},
     {2.354, -2.212*10, -5.211*pow(10.,-1)},
     {6.560,  1.182*10, -1.958*pow(10.,-1)},
-    {6.733,6.338,-3.788*pow(10.,-1)}
     };
 
 double a(double r[cossos][dim], double Distancies3[cossos][cossos], double m[cossos],int k1, int eix){
@@ -88,7 +79,6 @@ double MomentCM(double v[cossos][dim], double m[cossos], int e){
 }
 double MomentAngular(double r[cossos][dim], double v[cossos][dim], double m[cossos], int e){
     double L =0.0;
-
     for (int cos =0; cos<cossos; cos++){
         L+= m[cos]*(r[cos][(e+1)%3]*v[cos][(e+2)%3] -r[cos][(e+2)%3]*v[cos][(e+1)%3]);
     }
@@ -99,7 +89,7 @@ double MomentAngular(double r[cossos][dim], double v[cossos][dim], double m[coss
 int main(){
     clock_t t0 = clock();
     FILE *output;
-    output = fopen("trajectories_magnituds_conservades.txt", "w");
+    output = fopen("trajectories_MAGNITUDS_4C_dies.txt", "w");
 
     fprintf(output,"t");
     for (int k=0; k<cossos; k++){ //headers

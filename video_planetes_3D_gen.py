@@ -10,11 +10,12 @@ Lines = file.readlines()
 
 
 list_headers = Lines[0].split(' ')
-
+labels = [word.split('_')[1] for i,word in enumerate(list_headers[1:-7]) if i%4 == 0]
+print(labels)
 N_cossos = 7
 N_dim = 3
 N_dies = len(Lines)-1
-dia1= '13-09-2021'
+dia1= '12-09-2021'
 dia = datetime.datetime.strptime(dia1, '%d-%m-%Y')
 
 
@@ -26,13 +27,13 @@ for cos in range(N_cossos):
 
 fig = plt.figure()
 ax = fig.add_subplot(projection="3d")
-colors_planetes =['yellow', 'darkorange','limegreen', 'darkturquoise', 'crimson', 'violet', 'cyan']
-colors = ['white', 'darkorange','limegreen', 'darkturquoise', 'crimson','darkmagenta', 'navy']
+colors_planetes =['yellow', 'darkorange','limegreen', 'darkblue', 'crimson', 'violet', 'cyan']
+colors = ['white', 'darkorange','limegreen', 'blue', 'crimson','darkmagenta', 'navy']
 
 text_dia = ax.text2D(0.05, 0.95, str(dia1), transform=ax.transAxes)
-PLANETES = [ax.plot([],[], 'o', markersize= 5, color = colors_planetes[i])[0] for i in range(N_cossos-2)]
+PLANETES = [ax.plot([],[], 'o', markersize= 5, color = colors_planetes[i], label = labels[i])[0] for i in range(N_cossos-2)]
 traces = [ax.plot([],[], '-', lw = 0.7, alpha = 0.9, color = colors[i])[0] for i in range(N_cossos-2) ]
-patches = PLANETES + traces
+patches = traces+ PLANETES 
 
 
 def animate(i):
@@ -52,9 +53,11 @@ def animate(i):
 ax.set(xlim3d=(-1.5, 1.5), xlabel='x (AU)')
 ax.set(ylim3d=(-1.5, 1.5), ylabel='y (AU)')
 ax.set(zlim3d=(-0.3, 0.3), zlabel='z (AU)')
+ax.set_title('Sistema solar interior')
+plt.legend(fontsize=9)
 
 fig.patch.set_facecolor('black') 
 ani = animation.FuncAnimation(fig, animate, frames = N_dies,interval = 1, blit = True)
 dpi = 200
 writer = animation.writers['ffmpeg'](fps=30)
-ani.save('video_planetes_trayectorias_estandard.mp4',writer=writer,dpi=dpi)
+ani.save('video_SMVTM.mp4',writer=writer,dpi=dpi)
