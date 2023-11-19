@@ -13,17 +13,18 @@ const double PI = 3.14159265359;
 const double L0 = 149597870.7; //km //Longitud pròpia: 1U.A
 const double T0 = (365.2425*24.*3600.)/(2*PI);//s  //Temps propi: 1 Any/2Pi
 
+
 double dt = 2*PI/(365.2425*24*60); //min 
-#define N 782*24*60//Nombre d'iteracions (nombre de min en 782 dies)
+#define N 781*24*60//Nombre d'iteracions (nombre de min en 781 dies)
 
 /*
 double dt = 3600./T0; //hora
-#define N 18768//Nombre d'iteracions (nombre de h en 782 dies)
+#define N 18768//Nombre d'iteracions (nombre de h en 781 dies)
 
 double dt = 3600.*24./T0; //dia
-#define N 782 //Nombre d'iteracions (nombre de dies en 782 dies)
-*/
+#define N 781 //Nombre d'iteracions (nombre de dies en 781 dies)
 
+*/
 char *names[] = {"Sol","Terra","Mart", "Jupiter"};
 
 //DADES INICIALS sense normalitzar
@@ -152,7 +153,7 @@ int main(){
     double Kv[cossos][4][dim]; //Kv[cos][subíndex K][dimensió]
     double Pk[3][cossos][dim];
 
-    for (int n=1; n<N; n++){ //iterar per pas
+    for (int n=1; n<=N; n++){ //iterar per pas
         t+=dt*(T0/(3600*24)); //guarda el temps en dies
 
        MDIST3(P);
@@ -214,6 +215,7 @@ int main(){
             fprintf(output, " %lf\n", Etotal);
         }
     }
+    printf("t = %lf", t);
     t0 = clock()-t0;
     double temps_exc = ((double)t0)/CLOCKS_PER_SEC;
     printf("Temps execucio t=%lf", temps_exc);
